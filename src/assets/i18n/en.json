@@ -4,5 +4,7 @@
   "USER_NAME": "Username",
   "PASSWORD": "Password",
   "REGISTER": "Register",
-  "EMAIL": "Email"
+  "EMAIL": "Email",
+  "LOGIN_ERROR": "Invalid username or password. Please try again!",
+  "LOGOUT": "Logout"
 }

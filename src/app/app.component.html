@@ -1,11 +1,18 @@
+<!-- Toolbar -->
+<mat-toolbar color="primary" class="app-header">
+  <div style="margin-left: 1%">{{'TITLE_DOCTOR_ONLINE' | translate}}</div>
+  <span class="nav-tool-items">
+    <a mat-button routerLink="login" routerLinkActive="active"
+       *ngIf="!authService.isAuthenticated()">{{'LOGIN' | translate}}</a>
+    <a mat-button mat-raised-button routerLink="register" routerLinkActive="active"
+       *ngIf="!authService.isAuthenticated()">{{'REGISTER' | translate}}</a>
 
-  <!-- Toolbar -->
-  <mat-toolbar color="primary" class="app-header">
-    <div style="margin-left: 1%">{{'TITLE_DOCTOR_ONLINE' | translate}}</div>
-    <span class="nav-tool-items">
-    <a mat-button routerLink="login" routerLinkActive="active">{{'LOGIN' | translate}}</a>
-    <a mat-button mat-raised-button routerLink="register" routerLinkActive="active">{{'REGISTER' | translate}}</a>
+    <button mat-button [matMenuTriggerFor]="menu" *ngIf="authService.isAuthenticated()">
+      <span class="material-icons" style="margin-right: 5px">account_circle</span>{{currentUser.username}}</button>
+    <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="authService.logout()">{{'LOGOUT' | translate}}</button>
+    </mat-menu>
   </span>
-  </mat-toolbar>
+</mat-toolbar>
 
-  <router-outlet></router-outlet>
+<router-outlet></router-outlet>

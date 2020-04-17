@@ -17,10 +17,12 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatMenuModule} from "@angular/material/menu";
 
 
 @NgModule({
   imports: [
+    MatMenuModule,
     CommonModule,
     MatButtonModule,
     MatToolbarModule,
@@ -41,6 +43,7 @@ import {MatChipsModule} from "@angular/material/chips";
     MatPaginatorModule
   ],
   exports: [
+    MatMenuModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,

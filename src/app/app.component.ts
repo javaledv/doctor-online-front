@@ -21,6 +21,7 @@ export class AppComponent {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
     this.translateService.setDefaultLang('ru');
     this.translateService.use('ru');
+    this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
 
   logout() {
