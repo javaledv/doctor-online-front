@@ -1,0 +1,26 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title style="color: #0c5687;">{{'LOGIN' | translate}}</mat-card-title>
+    </mat-card-header>
+
+    <form class="example-form" (ngSubmit)="tryAuth()">
+      <mat-card-content>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="{{'USER_NAME' | translate}}" [(ngModel)]="cred.userName" name="userName">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="{{'PASSWORD' | translate}}" [(ngModel)]="cred.password" name="password">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </mat-card-content>
+      <button mat-stroked-button color="accent" class="btn-block">{{'LOGIN' | translate}}</button>
+    </form>
+  </mat-card>
+
+</div>
