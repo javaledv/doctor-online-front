@@ -5,7 +5,7 @@
       <mat-card-title style="color: #0c5687;">{{'LOGIN' | translate}}</mat-card-title>
     </mat-card-header>
 
-    <form class="example-form" (ngSubmit)="tryAuth()">
+    <form class="example-form">
       <mat-card-content>
 
         <mat-form-field class="example-full-width">
@@ -22,7 +22,7 @@
         <div *ngIf="showError" class="error-message">{{'LOGIN_ERROR'| translate}}</div>
 
       </mat-card-content>
-      <button mat-stroked-button color="accent" class="btn-block">{{'LOGIN' | translate}}</button>
+      <button mat-stroked-button color="accent" (click)="tryAuth()" class="btn-block">{{'LOGIN' | translate}}</button>
     </form>
   </mat-card>
 
