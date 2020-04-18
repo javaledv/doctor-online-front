@@ -24,9 +24,12 @@ export class AppComponent {
     this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
 
+  isAuthenticated() {
+    return this.authService.isAuthenticated()
+  }
+
   logout() {
     this.authService.logout();
-    this.router.navigate(['/login']);
   }
 
 }

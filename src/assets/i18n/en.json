@@ -3,8 +3,12 @@
   "LOGIN": "Log in",
   "USER_NAME": "Username",
   "PASSWORD": "Password",
+  "CONFIRM_PASSWORD": "Confirm password",
   "REGISTER": "Register",
   "EMAIL": "Email",
   "LOGIN_ERROR": "Invalid username or password. Please try again!",
-  "LOGOUT": "Logout"
+  "LOGOUT": "Logout",
+  "NOT_VALID_EMAIL": "Not a valid email",
+  "NOT_VALID_PASSWORD_LENGTH": "Password length should be more the 6 symbols",
+  "NOT_VALID_PASSWORD_EQUALS": "Passwords should be equals"
 }
