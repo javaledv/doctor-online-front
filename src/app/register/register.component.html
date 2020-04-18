@@ -1,40 +1,57 @@
-
 <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
   <mat-card class="box">
     <mat-card-header>
       <mat-card-title style="color: #0c5687;">{{'REGISTER' | translate}}</mat-card-title>
     </mat-card-header>
 
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="example-form">
+    <form [formGroup]="registerForm" class="example-form">
 
       <mat-card-content>
         <mat-form-field class="example-full-width">
           <input matInput placeholder="{{'EMAIL' | translate}}" formControlName="email" required>
         </mat-form-field>
 
-        <div *ngIf="f.email.errors" class="error-message">{{getErrorMessage('email') | translate}}</div>
+        <div *ngIf="!f.email.valid">
+          <div [ngClass]="f.email.getError('email') ? 'error-message' : ''">
+            {{getErrorMessage('email') | translate}}
+          </div>
+        </div>
 
         <mat-form-field class="example-full-width">
-          <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="{{'PASSWORD' | translate}}" [(ngModel)]="cred.password" formControlName="password" name="password">
-          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+          <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="{{'PASSWORD' | translate}}"
+                 [(ngModel)]="cred.password" formControlName="password" name="password" required>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hidePassword">
             <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
         </mat-form-field>
 
-        <div *ngIf="f.password.errors" class="error-message">{{getErrorMessage('password' ) | translate}}</div>
+        <div *ngIf="!f.password.valid">
+          <div [ngClass]="f.password.getError('minlength') ? 'error-message' : ''">
+            {{getErrorMessage('password') | translate}}
+          </div>
+        </div>
 
         <mat-form-field class="example-full-width">
-          <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="{{'CONFIRM_PASSWORD' | translate}}" formControlName="confirmPassword" name="confirmPassword">
-          <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword">
+          <input matInput [type]="hideConfirmPassword ? 'password' : 'text'"
+                 placeholder="{{'CONFIRM_PASSWORD' | translate}}" formControlName="confirmPassword"
+                 name="confirmPassword" required>
+          <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword"
+                  [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword">
             <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
         </mat-form-field>
 
-        <div *ngIf="f.confirmPassword.errors" class="error-message">{{getErrorMessage('confirmPassword') | translate}}</div>
+        <div *ngIf="!f.confirmPassword.valid">
+          <div [ngClass]="f.confirmPassword.getError('mustMatch') ? 'error-message' : ''">
+            {{getErrorMessage('confirmPassword') | translate}}
+          </div>
+        </div>
 
       </mat-card-content>
 
-      <button mat-stroked-button color="accent" class="btn-block" [disabled]="!isCanSubmit()">{{'REGISTER' | translate}}</button>
+      <button mat-stroked-button color="accent" class="btn-block" [disabled]="!isCanSubmit()"
+              (click)="register()">{{'REGISTER' | translate}}</button>
 
     </form>
   </mat-card>

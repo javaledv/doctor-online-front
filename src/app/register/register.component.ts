@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.controls;
   }
 
-  onSubmit() {
+  register() {
 
   }
 
