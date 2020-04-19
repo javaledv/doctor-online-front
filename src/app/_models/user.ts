@@ -5,5 +5,6 @@ export class User {
   email: string;
   roles?: Role[];
   password: string;
+  active?: boolean
   authdata?: string;
 }

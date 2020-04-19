@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {first} from 'rxjs/operators';
 import {User} from "../_models";
+import {AuthService} from "../_service";
 
 
 @Component({
@@ -11,7 +11,7 @@ export class HomeComponent {
   loading = false;
   users: User[];
 
-  constructor() {
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
