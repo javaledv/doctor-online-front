@@ -10,6 +10,7 @@
   "LOGOUT": "Выход",
   "NOT_VALID_EMAIL": "Электронная почта не валидна",
   "NOT_VALID_PASSWORD_LENGTH" : "Длина пароля должна быть больше 6 символов",
-  "NOT_VALID_PASSWORD_EQUALS": "Пароли должны совпадать"
+  "NOT_VALID_PASSWORD_EQUALS": "Пароли должны совпадать",
+  "USER_ALREADY_EXIST": "Пользователь с указанной электронной почтой уже существует"
 }
 

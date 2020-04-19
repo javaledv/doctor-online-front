@@ -10,5 +10,6 @@
   "LOGOUT": "Logout",
   "NOT_VALID_EMAIL": "Not a valid email",
   "NOT_VALID_PASSWORD_LENGTH": "Password length should be more the 6 symbols",
-  "NOT_VALID_PASSWORD_EQUALS": "Passwords should be equals"
+  "NOT_VALID_PASSWORD_EQUALS": "Passwords should be equals",
+  "USER_ALREADY_EXIST": "User with specified email already exist"
 }

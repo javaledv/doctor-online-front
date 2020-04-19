@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {mustMatch} from "../_helper";
+import {User} from "../_models";
+import {Router} from "@angular/router";
+import {AuthService} from "../_service";
+import {PatientService} from "../_service/patient.service";
 
 @Component({
   selector: 'app-register',
@@ -14,12 +18,16 @@ export class RegisterComponent implements OnInit {
   hidePassword = true;
   hideConfirmPassword = true;
 
-  cred = {
+  user: User = {
+    id: null,
     password: '',
     email: ''
-  }
+  };
 
-  constructor(private formBuilder: FormBuilder) {
+  registerInProgress = false;
+  showRegisterError = false;
+
+  constructor(private formBuilder: FormBuilder, private patientService: PatientService, private router: Router, private authService: AuthService) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -37,7 +45,32 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
+    const email = this.user.email;
+    const password = this.user.password;
+    this.registerInProgress = true;
+    this.showRegisterError = false;
 
+    this.patientService.crete(this.user)
+      .subscribe(result => {
+        console.log('User created: ' + result);
+        this.authService.login(email, password).subscribe(
+          result => {
+            console.log("Success login " + email);
+            this.router.navigateByUrl('/')
+            this.registerInProgress = false;
+          }, error => {
+            console.log("Failing login " + email);
+            this.router.navigateByUrl('/login')
+            this.registerInProgress = false;
+          }
+        );
+      }, error => {
+        if(error.error.error_code == 4) {
+          console.log('HERE Error:' + error);
+          this.showRegisterError = true;
+        }
+        this.registerInProgress = false;
+      })
   }
 
   getErrorMessage(controlName) {
@@ -50,7 +83,9 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+
+
   isCanSubmit() {
-    return this.registerForm.valid;
+    return this.registerForm.valid && !this.registerInProgress;
   }
 }

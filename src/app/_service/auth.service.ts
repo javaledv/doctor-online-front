@@ -4,6 +4,7 @@ import {User} from "../_models";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {catchError, map} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 const AUTH_LOGIN_PATH = "/api/auth/login";
 
@@ -16,7 +17,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   private _isAuthenticated: boolean;
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
 
@@ -61,9 +62,20 @@ export class AuthService {
 
 
   logout() {
-    // remove user from local storage to log user out
+    this.httpClient.post("/api/auth/logout", null)
+      .subscribe(response => {
+        console.log("Logout ok ")
+        this.localLogout()
+      }, error => {
+        console.log("Logout error")
+        this.localLogout()
+      })
+  }
+
+  localLogout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+    this.cookieService.deleteAll();
     this.router.navigateByUrl('/login')
   }
 }
