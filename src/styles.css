@@ -1,23 +1,15 @@
-html, body {
+html {
   height: 100%;
-  margin-left: 7%;
-  margin-right: 7%;
-  padding: 0;
   background-color: #f1f7fd;
+  margin: 0;
+}
+
+body {
+  height: 100%;
+  margin: 0;
 }
 
 .mat-toolbar.mat-primary {
   background: #0c5687;
-}
-
-.app-header {
-  background: #0c5687;
-  justify-content: space-between;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
 }
 

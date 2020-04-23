@@ -11,6 +11,26 @@
   "NOT_VALID_EMAIL": "Электронная почта не валидна",
   "NOT_VALID_PASSWORD_LENGTH" : "Длина пароля должна быть больше 6 символов",
   "NOT_VALID_PASSWORD_EQUALS": "Пароли должны совпадать",
-  "USER_ALREADY_EXIST": "Пользователь с указанной электронной почтой уже существует"
+  "USER_ALREADY_EXIST": "Пользователь с указанной электронной почтой уже существует",
+  "GREETING": "Привет!",
+  "FIRST_LOGIN_MESSAGE": "Похоже что это Ваш первый вход в систему",
+  "FILL_OUT_FORM_MESSAGE": "Пожалуйста, заполните информацию о себе",
+  "PERSONAL_INFORMATION": "Персональные данные",
+  "ADDRESS": "Адрес",
+  "DONE": "Готово",
+  "LAST_NAME": "Фамилия",
+  "FIRST_NAME": "Имя",
+  "MIDDLE_NAME": "Отчество",
+  "GENDER": "Пол",
+  "MALE": "Мужской",
+  "FEMALE": "Женский",
+  "BIRTHDAY": "День рождения",
+  "CITY": "Город",
+  "STREET": "Улица",
+  "HOUSE_NUMBER": "Номер дома",
+  "PHONE_NUMBER": "Номер телефона",
+  "POST_INDEX": "Почтовый индекс",
+  "CONTACTS": "Контакты",
+  "INDEX": "Индекс"
 }
 

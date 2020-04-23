@@ -1,7 +1,9 @@
 <!-- Toolbar -->
-<mat-toolbar color="primary" class="app-header">
-  <div style="margin-left: 1%">{{'TITLE_DOCTOR_ONLINE' | translate}}</div>
-  <span class="nav-tool-items">
+
+<div class="app-root">
+  <mat-toolbar color="primary" class="app-header">
+    <div style="margin-left: 1%">{{'TITLE_DOCTOR_ONLINE' | translate}}</div>
+    <span class="nav-tool-items">
     <a mat-button routerLink="login" routerLinkActive="active"
        *ngIf="!isAuthenticated()">{{'LOGIN' | translate}}</a>
     <a mat-button mat-raised-button routerLink="register" routerLinkActive="active"
@@ -13,6 +15,10 @@
     <button mat-menu-item (click)="logout()">{{'LOGOUT' | translate}}</button>
     </mat-menu>
   </span>
-</mat-toolbar>
+  </mat-toolbar>
 
-<router-outlet></router-outlet>
+  <div class="app-router-outlet">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+

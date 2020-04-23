@@ -8,15 +8,13 @@ import {UnauthorizedInterceptor} from "./_helper/unauthorized.interceptor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from "./login";
-import {HomeComponent} from "./home";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularMaterialModule} from "./angular-material.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import { DashboardComponent } from './dashboard/dashboard.component';
+import {DashboardComponent, ProfileDialog} from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import { ActivateComponent } from './activate/activate.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -25,11 +23,10 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
     DashboardComponent,
     RegisterComponent,
-    ActivateComponent
+    ProfileDialog
   ],
   imports: [
     BrowserModule,
