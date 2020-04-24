@@ -4,11 +4,13 @@ import {AuthService} from "../_service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
 import {Patient} from "../_models/patient";
+import {PatientService} from "../_service/patient.service";
+import {Router} from "@angular/router";
 
 export interface DialogData {
   animal: string;
@@ -47,7 +49,6 @@ export class DashboardComponent implements OnInit {
       this.animal = result;
     });
   }
-
 }
 
 @Component({
@@ -88,6 +89,7 @@ export class ProfileDialog implements OnInit {
       city: ['', Validators.required],
       street: ['', Validators.required],
       houseNumber: ['', Validators.required],
+      apartment: ['', Validators.required]
     });
     this.contactsFormGroup = this._formBuilder.group({
       phoneNumber: ['', Validators.required],
@@ -98,11 +100,27 @@ export class ProfileDialog implements OnInit {
   constructor(public dialogRef: MatDialogRef<ProfileDialog>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData,
               private _formBuilder: FormBuilder,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private patientService: PatientService,
+              private router: Router) {
   }
 
-  onNoClick(): void {
+  save() {
+    this.patient.id = this.authService.currentUserValue.id;
+    this.patientService.save(this.patient).subscribe(patient => {
+      this.authService.currentUserValue.active = true;
+      this.dialogRef.close()
+    }, error => {
+      console.log(error)
+    })
+  }
+
+  logout(): void {
     this.dialogRef.close();
     this.authService.logout();
+  }
+
+  isDone() {
+    return this.personalDataFormGroup.valid && this.addressFormGroup.valid && this.contactsFormGroup.valid
   }
 }

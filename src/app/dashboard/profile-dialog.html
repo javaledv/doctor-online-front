@@ -1,90 +1,115 @@
 <div class="profile-dialog-root">
   <h1 mat-dialog-title>{{'GREETING' | translate}}</h1>
   <div mat-dialog-content class="profile-dialog-content">
-      <p class="profile-dialog-fill-out-message">{{'FILL_OUT_FORM_MESSAGE' | translate}}</p>
+    <p class="profile-dialog-fill-out-message">{{'FILL_OUT_FORM_MESSAGE' | translate}}</p>
 
-      <mat-horizontal-stepper linear #stepper class="activate-stepper">
+    <mat-horizontal-stepper linear #stepper class="activate-stepper">
 
-        <mat-step [stepControl]="personalDataFormGroup" [editable]="isEditable">
-          <form [formGroup]="personalDataFormGroup" class = "profile-dialog-personal-data">
-            <ng-template matStepLabel>{{'PERSONAL_INFORMATION' | translate}}</ng-template>
+      <mat-step [stepControl]="personalDataFormGroup" [editable]="isEditable">
+        <form [formGroup]="personalDataFormGroup" class="profile-dialog-personal-data">
+          <ng-template matStepLabel>{{'PERSONAL_INFORMATION' | translate}}</ng-template>
+          <mat-form-field>
+            <mat-label>{{'LAST_NAME' | translate}}</mat-label>
+            <input matInput [(ngModel)]="patient.lastName" formControlName="lastName"
+                   placeholder="{{'LAST_NAME' | translate}}" required style="margin-top: 12px">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>{{'GENDER' | translate}}</mat-label>
+            <mat-select [(ngModel)]="patient.gender" formControlName="gender" required>
+              <mat-option value="0">{{'MALE' | translate}}</mat-option>
+              <mat-option value="1">{{'FEMALE' | translate}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'FIRST_NAME' | translate}}</mat-label>
+            <input matInput [(ngModel)]="patient.firstName" formControlName="firstName"
+                   placeholder="{{'FIRST_NAME' | translate}}" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'BIRTHDAY' | translate}}</mat-label>
+            <input matInput [(ngModel)]="patient.birthday" [matDatepicker]="picker" formControlName="birthday" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'MIDDLE_NAME' | translate}}</mat-label>
+            <input matInput [(ngModel)]="patient.middleName" formControlName="middleName"
+                   placeholder="{{'MIDDLE_NAME' | translate}}" required>
+          </mat-form-field>
+        </form>
+      </mat-step>
 
-            <mat-form-field>
-              <mat-label>{{'LAST_NAME' | translate}}</mat-label>
-              <input matInput [(ngModel)]="patient.lastName" formControlName="lastName" placeholder="{{'LAST_NAME' | translate}}" required style="margin-top: 12px">
-            </mat-form-field>
+      <mat-step [stepControl]="addressFormGroup" [editable]="isEditable">
+        <form [formGroup]="addressFormGroup" class="profile-dialog-address">
+          <ng-template matStepLabel>{{'ADDRESS' | translate}}</ng-template>
+          <mat-form-field>
+            <mat-label>{{'CITY' | translate}}</mat-label>
+            <input matInput [(ngModel)]="patient.address.city" formControlName="city"
+                   placeholder="{{'CITY' | translate}}" required style="margin-top: 12px">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'STREET' | translate}}</mat-label>
+            <input matInput [(ngModel)]="patient.address.street" formControlName="street"
+                   placeholder="{{'STREET' | translate}}" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'HOUSE_NUMBER' | translate}}</mat-label>
+            <input matInput [(ngModel)]="patient.address.houseNumber" formControlName="houseNumber"
+                   placeholder="{{'HOUSE_NUMBER' | translate}}" required>
+          </mat-form-field>
+          <mat-form-field style="margin-left: 120px">
+            <mat-label>{{'APARTMENT' | translate}}</mat-label>
+            <input matInput [(ngModel)]="patient.address.apartment" formControlName="apartment"
+                   placeholder="{{'APARTMENT' | translate}}" required style="margin-top: 12px">
+          </mat-form-field>
+        </form>
+      </mat-step>
 
-            <mat-form-field appearance="fill">
-              <mat-label>{{'GENDER' | translate}}</mat-label>
-              <mat-select [(ngModel)]="patient.gender" formControlName="gender" required>
-                <mat-option value="1">{{'MALE' | translate}}</mat-option>
-                <mat-option value="2">{{'FEMALE' | translate}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field>
-              <mat-label>{{'FIRST_NAME' | translate}}</mat-label>
-              <input matInput [(ngModel)]="patient.firstName" formControlName="firstName" placeholder="{{'FIRST_NAME' | translate}}" required>
-            </mat-form-field>
-
-            <mat-form-field>
-              <mat-label>{{'BIRTHDAY' | translate}}</mat-label>
-              <input matInput [(ngModel)]="patient.birthday" [matDatepicker]="picker" formControlName="birthday" required>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field>
-              <mat-label>{{'MIDDLE_NAME' | translate}}</mat-label>
-              <input matInput  [(ngModel)]="patient.middleName" formControlName="middleName" placeholder="{{'MIDDLE_NAME' | translate}}" required>
-            </mat-form-field>
-          </form>
-        </mat-step>
-
-        <mat-step [stepControl]="addressFormGroup" [editable]="isEditable">
-          <form [formGroup]="addressFormGroup" class = "profile-dialog-address">
-            <ng-template matStepLabel>{{'ADDRESS' | translate}}</ng-template>
-            <mat-form-field>
-              <mat-label>{{'CITY' | translate}}</mat-label>
-              <input matInput formControlName="city" placeholder="{{'CITY' | translate}}" required>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>{{'STREET' | translate}}</mat-label>
-              <input matInput formControlName="street" placeholder="{{'STREET' | translate}}" required>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>{{'HOUSE_NUMBER' | translate}}</mat-label>
-              <input matInput formControlName="houseNumber" placeholder="{{'HOUSE_NUMBER' | translate}}" required>
-            </mat-form-field>
-          </form>
-        </mat-step>
-
-        <mat-step [stepControl]="addressFormGroup" [editable]="isEditable">
-          <form [formGroup]="addressFormGroup" class = "profile-dialog-address">
-            <ng-template matStepLabel>{{'CONTACTS' | translate}}</ng-template>
-            <mat-form-field>
-              <mat-label>{{'PHONE_NUMBER' | translate}}</mat-label>
-              <input matInput formControlName="phoneNumber" placeholder="{{'PHONE_NUMBER' | translate}}" required>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>{{'INDEX' | translate}}</mat-label>
-              <input matInput formControlName="index" placeholder="{{'INDEX' | translate}}" required>
-            </mat-form-field>
-          </form>
-        </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>{{'DONE' | translate}}</ng-template>
-          <p>You are now done.</p>
+      <mat-step [stepControl]="contactsFormGroup" [editable]="isEditable">
+        <form [formGroup]="contactsFormGroup" class="profile-dialog-contacts">
+          <ng-template matStepLabel>{{'CONTACTS' | translate}}</ng-template>
+          <mat-form-field>
+            <mat-label>{{'PHONE_NUMBER' | translate}}</mat-label>
+            <input matInput [(ngModel)]="patient.phoneNumber" formControlName="phoneNumber"
+                   placeholder="{{'PHONE_NUMBER' | translate}}" required style="margin-top: 12px">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{'INDEX' | translate}}</mat-label>
+            <input matInput [(ngModel)]="patient.address.index" formControlName="index"
+                   placeholder="{{'INDEX' | translate}}"
+                   required>
+          </mat-form-field>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>{{'DONE' | translate}}</ng-template>
+        <div class="profile-dialog-total">
           <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
+            <p>{{'LAST_NAME' | translate}}: {{patient.lastName}}</p>
+            <p>{{'FIRST_NAME' | translate}}: {{patient.firstName}}</p>
+            <p>{{'MIDDLE_NAME' | translate}}: {{patient.middleName}}</p>
+            <p>{{'GENDER' | translate}}: {{patient.gender}}</p>
+            <p>{{'BIRTHDAY' | translate}}: {{patient.birthday}}</p>
           </div>
-        </mat-step>
+          <div>
+            <p>{{'PHONE_NUMBER' | translate}}: {{patient.phoneNumber}}</p>
+            <p>{{'INDEX' | translate}}: {{patient.address.index}}</p>
+          </div>
+          <div>
+            <p>{{'CITY' | translate}}: {{patient.address.city}}</p>
+            <p>{{'STREET' | translate}}: {{patient.address.street}}</p>
+            <p>{{'HOUSE_NUMBER' | translate}}: {{patient.address.houseNumber}}</p>
+            <p>{{'APARTMENT' | translate}}: {{patient.address.apartment}}</p>
+          </div>
+        </div>
+      </mat-step>
 
-      </mat-horizontal-stepper>
-    </div>
+    </mat-horizontal-stepper>
+  </div>
   <div mat-dialog-actions class="profile-dialog-actions">
-    <button mat-button mat-raised-button color="primary" (click)="onNoClick()">{{'LOGOUT' | translate}}</button>
+    <button mat-button mat-raised-button color="primary" (click)="save()"
+            [disabled]="!isDone()">{{'DONE' | translate}}</button>
+    <button mat-button mat-raised-button color="accent" (click)="logout()">{{'LOGOUT' | translate}}</button>
   </div>
 </div>
 
