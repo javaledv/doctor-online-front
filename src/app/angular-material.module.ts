@@ -21,6 +21,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatTreeModule} from "@angular/material/tree";
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatTreeModule
   ],
   exports: [
     MatMenuModule,
@@ -67,6 +69,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatProgressBarModule,
     MatStepperModule,
     MatDialogModule,
+    MatTreeModule
   ],
   providers: [
     MatDatepickerModule,
