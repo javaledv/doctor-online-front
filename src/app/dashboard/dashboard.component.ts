@@ -10,7 +10,7 @@ import {
 } from '@angular/material-moment-adapter';
 import {Patient} from "../_models/patient";
 import {PatientService} from "../_service/patient.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 export interface DialogData {
   animal: string;
@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  constructor(public dialog: MatDialog, private authService: AuthService) {
+  constructor(public dialog: MatDialog, private authService: AuthService, private router: Router, private route: ActivatedRoute) {
     if (!authService.currentUserValue.active) {
       this.openDialog()
     }
@@ -40,7 +40,6 @@ export class DashboardComponent implements OnInit {
     const dialogRef = this.dialog.open(ProfileDialog, {
       height: '60%',
       width: '45%',
-      data: {name: this.name, animal: this.animal},
       disableClose: true
     });
 
@@ -49,6 +48,11 @@ export class DashboardComponent implements OnInit {
       this.animal = result;
     });
   }
+
+  redirect(path: string) {
+    this.router.navigate(['district'], { relativeTo: this.route });
+  }
+
 }
 
 @Component({

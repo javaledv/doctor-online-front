@@ -15,6 +15,7 @@ import {DashboardComponent, ProfileDialog} from './dashboard/dashboard.component
 import { RegisterComponent } from './register/register.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import { DistrictDoctorComponent } from './district-doctor/district-doctor.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -26,7 +27,8 @@ export function createTranslateLoader(http: HttpClient) {
     LoginComponent,
     DashboardComponent,
     RegisterComponent,
-    ProfileDialog
+    ProfileDialog,
+    DistrictDoctorComponent
   ],
   imports: [
     BrowserModule,

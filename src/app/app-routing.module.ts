@@ -4,20 +4,23 @@ import {AuthGuard} from "./_helper/auth.guard";
 import {LoginComponent} from "./login";
 import {RegisterComponent} from "./register/register.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {DistrictDoctorComponent} from "./district-doctor/district-doctor.component";
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent, canActivate: [AuthGuard]},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], children: [
+      {path: 'district', component: DistrictDoctorComponent, canActivate: [AuthGuard]},
+    ]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
 
   // otherwise redirect to home
-  {path: '**', redirectTo: ''}
+  {path: '**', redirectTo: 'dashboard'}
 ];
 
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
   ],
   exports: [RouterModule]
 })
