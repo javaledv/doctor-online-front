@@ -10,7 +10,7 @@
        *ngIf="!isAuthenticated()">{{'REGISTER' | translate}}</a>
 
     <button mat-button [matMenuTriggerFor]="menu" *ngIf="isAuthenticated()">
-      <span class="material-icons" style="margin-right: 5px">account_circle</span>{{currentUser.email}}</button>
+      <span class="material-icons" style="margin-right: 5px">account_circle</span>{{principal.email}}</button>
     <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="logout()">{{'LOGOUT' | translate}}</button>
     </mat-menu>

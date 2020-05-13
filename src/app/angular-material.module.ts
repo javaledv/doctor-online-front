@@ -22,6 +22,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTreeModule} from "@angular/material/tree";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import {MatTreeModule} from "@angular/material/tree";
     MatTableModule,
     MatPaginatorModule,
     MatProgressBarModule,
-    MatTreeModule
+    MatTreeModule,
+    MatAutocompleteModule,
+    MatCardModule
   ],
   exports: [
     MatMenuModule,
@@ -69,7 +73,9 @@ import {MatTreeModule} from "@angular/material/tree";
     MatProgressBarModule,
     MatStepperModule,
     MatDialogModule,
-    MatTreeModule
+    MatTreeModule,
+    MatAutocompleteModule,
+    MatCardModule
   ],
   providers: [
     MatDatepickerModule,

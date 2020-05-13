@@ -1,0 +1,100 @@
+<div class="appointment-with-doctor-root">
+  <div class="appointment-with-doctor-header">
+    <h1 style="width: 100%; height: 100%; font-size: 30px">{{'APPOINTMENT_WITH_DOCTOR' | translate}}</h1>
+  </div>
+  <div class="appointment-with-doctor-content">
+    <div class="appointment-with-doctor-content-search-header">
+      <form class="appointment-with-specialization-select">
+        <mat-form-field class="appointment-with-specialization-full-width">
+          <mat-label>{{'SPECIALIZATION' | translate}}</mat-label>
+          <input type="text" matInput [formControl]="specializationControl" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                            (optionSelected)="select($event.option.value)">
+            <mat-option *ngFor="let option of filteredSpecializations | async" [value]="option">
+              {{option.localizedName}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="appointment-with-doctor-content-table">
+      <table mat-table [dataSource]="doctors" multiTemplateDataRows class="mat-elevation-z8">
+
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef style="width: 10%">{{'LAST_NAME' | translate}}</th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef style="width: 10%">{{'FIRST_NAME' | translate}}</th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="middleName">
+          <th mat-header-cell *matHeaderCellDef style="width: 20%">{{'MIDDLE_NAME' | translate}}</th>
+          <td mat-cell *matCellDef="let element"> {{element.middleName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="doctorSpecialization" >
+          <th mat-header-cell *matHeaderCellDef >{{'SPECIALIZATION' | translate}}</th>
+          <td mat-cell *matCellDef="let element"> {{element.doctorSpecialization.localizedName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cabinet">
+          <th mat-header-cell *matHeaderCellDef>{{'CABINET' | translate}}</th>
+          <td mat-cell *matCellDef="let element"> {{element.cabinet}} </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element; let time" [attr.colspan]="columnsToDisplay.length"
+              style="background-color: rgb(245, 253, 255)">
+            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <mat-card style="min-width: 20%">
+                <div style="margin-bottom: 5px">Дата: </div>
+                <mat-form-field class="example-full-width">
+                  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" [value]="time"
+                         [formControl]="date" (dateChange)="refreshDate($event.value)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </mat-card>
+              <mat-card style="min-width: 20%">
+                <div>
+                  <div> Часы приема:</div>
+                  <div style="color: #80b93d; text-align: center;font-size: 25pt;padding-top: 20px;"> 9:00 - 17:00</div>
+                </div>
+              </mat-card>
+              <mat-card style="min-width: 20%">
+                <div> Свободно талонов:</div>
+                <div style="color: #7fb9b9; text-align: center;font-size: 25pt;padding-top: 20px;"> 56</div>
+              </mat-card>
+              <mat-card style="width: 10%; background-color: #f5f8fb;">
+
+              </mat-card>
+              <mat-card style="width: 10%; background-color: #f0f5fb;">
+
+              </mat-card>
+
+              <mat-card style="width: 10%; background-color: #eaf1f9;">
+
+              </mat-card>
+
+              <mat-card style="width: 100%;  display: flex;align-items: center;justify-content: center;">
+                <button  mat-stroked-button color="primary" style="color: #0c5687;">Запись</button>
+              </mat-card>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      </table>
+      <mat-paginator class="appointment-table-paginator" [length]="resultsLength" [pageSize]="5"></mat-paginator>
+    </div>
+  </div>
+</div>

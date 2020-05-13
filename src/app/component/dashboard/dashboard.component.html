@@ -1,0 +1,30 @@
+<div class="dashboard-root">
+  <div class="dashboard-side-menu">
+    <mat-list>
+      <mat-list-item (click)="redirect('appointment')" class="dashboard-side-menu-button" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+        {{'APPOINTMENT_WITH_DOCTOR' | translate}}
+        <span class="material-icons" style="color: #e49c9c; margin-left: auto;">
+          local_hospital
+        </span>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item class="dashboard-side-menu-button">
+        {{'PAID_CONSULTATION' | translate}}
+        <span class="material-icons" style="color: #9ce4d4;; margin-left: auto;">
+            local_atm
+        </span>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item class="dashboard-side-menu-button" >
+        {{'CARD' | translate}}
+        <span class="material-icons" style="color: #9e9ce4;; margin-left: auto;">
+          menu_book
+        </span>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </div>
+  <div class="dashboard-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

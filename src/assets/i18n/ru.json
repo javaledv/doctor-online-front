@@ -33,10 +33,16 @@
   "CONTACTS": "Контакты",
   "INDEX": "Индекс",
   "APARTMENT": "Кватрира",
-  "DONE": "Готово",
-  "DISTRICT_DOCTOR": "Участковый врач",
+  "APPOINTMENT_WITH_DOCTOR": "Запись к врачу",
   "PAID_CONSULTATION": "Платные услуги",
   "CARD": "Карточка",
-  "HEADER_ICON": "Доктор онлайн"
+  "HEADER_ICON": "Доктор онлайн",
+  "SPECIALIZATION": "Специализация",
+  "ALL": "Все",
+  "lastName": "Фамилия",
+  "firstName": "Имя",
+  "middleName": "Отчество",
+  "doctorSpecialization": "Специализация",
+  "CABINET": "Кабинет"
 }
 

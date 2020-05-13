@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import {User} from "./_models";
+import {Component} from '@angular/core';
+import {Principal} from "./dto";
 import {Router} from "@angular/router";
-import {AuthService} from "./_service";
+import {AuthService} from "./service";
 import {TranslateService} from "@ngx-translate/core";
 
 @Component({
@@ -11,17 +11,16 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class AppComponent {
   title = 'doctor-online-front';
-  currentUser: User;
+  principal: Principal;
 
   constructor(
     private translateService: TranslateService,
     private router: Router,
     private authService: AuthService
   ) {
-    this.authService.currentUser.subscribe(x => this.currentUser = x);
+    this.authService.principal.subscribe(principal => this.principal = principal);
     this.translateService.setDefaultLang('ru');
     this.translateService.use('ru');
-    this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
 
   isAuthenticated() {
@@ -31,5 +30,4 @@ export class AppComponent {
   logout() {
     this.authService.logout();
   }
-
 }

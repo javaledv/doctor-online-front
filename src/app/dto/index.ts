@@ -1,0 +1,7 @@
+export * from './principal'
+export * from './doctor-specialization'
+export * from './base-dto'
+export * from './doctor'
+export * from './address'
+export * from './patient'
+export * from './role'
