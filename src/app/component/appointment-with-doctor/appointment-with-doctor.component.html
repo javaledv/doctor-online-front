@@ -4,18 +4,22 @@
   </div>
   <div class="appointment-with-doctor-content">
     <div class="appointment-with-doctor-content-search-header">
-      <form class="appointment-with-specialization-select">
-        <mat-form-field class="appointment-with-specialization-full-width">
-          <mat-label>{{'SPECIALIZATION' | translate}}</mat-label>
-          <input type="text" matInput [formControl]="specializationControl" [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                            (optionSelected)="select($event.option.value)">
-            <mat-option *ngFor="let option of filteredSpecializations | async" [value]="option">
-              {{option.localizedName}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </form>
+      <mat-card style="margin-right: 30px; box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);">
+        <form class="appointment-with-specialization-select">
+          <mat-form-field class="appointment-with-specialization-full-width">
+            <mat-label>{{'SPECIALIZATION' | translate}}</mat-label>
+            <input type="text" matInput [formControl]="specializationControl" [matAutocomplete]="auto">
+            <mat-icon matSuffix (click)="specializationControl.setValue('')" style="font-size: 10pt; color: #e49c9c; cursor: pointer" >clear</mat-icon>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                              (optionSelected)="select($event.option.value)">
+              <mat-option *ngFor="let option of filteredSpecializations | async" [value]="option">
+                {{option.localizedName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+      </mat-card>
+
     </div>
     <div class="appointment-with-doctor-content-table">
       <table mat-table [dataSource]="doctors" multiTemplateDataRows class="mat-elevation-z8">
@@ -59,29 +63,30 @@
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
               </mat-card>
+
               <mat-card style="min-width: 20%">
                 <div>
                   <div> Часы приема:</div>
                   <div style="color: #80b93d; text-align: center;font-size: 25pt;padding-top: 20px;"> 9:00 - 17:00</div>
                 </div>
               </mat-card>
+
               <mat-card style="min-width: 20%">
                 <div> Свободно талонов:</div>
                 <div style="color: #7fb9b9; text-align: center;font-size: 25pt;padding-top: 20px;"> 56</div>
               </mat-card>
-              <mat-card style="width: 10%; background-color: #f5f8fb;">
 
+              <mat-card style="width: 10%; background-color: #f5f8fb;">
               </mat-card>
               <mat-card style="width: 10%; background-color: #f0f5fb;">
-
               </mat-card>
 
               <mat-card style="width: 10%; background-color: #eaf1f9;">
-
               </mat-card>
 
               <mat-card style="width: 100%;  display: flex;align-items: center;justify-content: center;">
-                <button  mat-stroked-button color="primary" style="color: #0c5687;">Запись</button>
+                <span class="material-icons" style="font-size: 40pt; color: #0c5687; cursor: pointer"
+                      matTooltip="Запись">playlist_add</span>
               </mat-card>
             </div>
           </td>

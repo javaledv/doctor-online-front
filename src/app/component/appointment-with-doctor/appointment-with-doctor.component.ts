@@ -29,7 +29,6 @@ export class AppointmentWithDoctorComponent implements OnInit {
   filteredSpecializations: Observable<DoctorSpecialization[]>;
   selectedSpecialization: DoctorSpecialization;
 
-  tableDataSource = new MatTableDataSource<Doctor>([]);
   doctors: Doctor [] = [];
   columnsToDisplay = ['lastName', 'firstName', 'middleName', 'doctorSpecialization', 'cabinet'];
   expandedElement: Doctor | null;
@@ -50,7 +49,9 @@ export class AppointmentWithDoctorComponent implements OnInit {
     this.updateTable()
   }
 
-  constructor(private doctorSpecializationService: DoctorSpecializationService, private doctorService: DoctorService, private translate: TranslateService) {
+  constructor(private doctorSpecializationService: DoctorSpecializationService,
+              private doctorService: DoctorService,
+              private translate: TranslateService,) {
     this.doctorSpecializationService.getAll().subscribe(specializations => {
       let allName = '';
       translate.get('ALL').subscribe(value => allName = value);
@@ -86,7 +87,7 @@ export class AppointmentWithDoctorComponent implements OnInit {
 
   select(value) {
     this.selectedSpecialization = value;
-    this.paginator.pageIndex = 0
+    this.paginator.pageIndex = 0;
     this.updateTable();
   }
 
@@ -123,7 +124,7 @@ export class AppointmentWithDoctorComponent implements OnInit {
           return observableOf([]);
         })
       ).subscribe(data => {
-        this.doctors = data;
+      this.doctors = data;
     });
   }
 

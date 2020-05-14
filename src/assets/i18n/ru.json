@@ -43,6 +43,10 @@
   "firstName": "Имя",
   "middleName": "Отчество",
   "doctorSpecialization": "Специализация",
-  "CABINET": "Кабинет"
+  "CABINET": "Кабинет",
+  "ITEMS_PER_PAGE": "Всего элементов",
+  "NEXT_PAGE": "Следующая",
+  "PREVIOUS_PAGE": "Предыдущая",
+  "OF_LABEL": "из"
 }
 
