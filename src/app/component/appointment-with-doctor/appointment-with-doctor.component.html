@@ -4,12 +4,15 @@
   </div>
   <div class="appointment-with-doctor-content">
     <div class="appointment-with-doctor-content-search-header">
-      <mat-card style="margin-right: 30px; box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);">
+      <mat-card
+        style="margin-right: 30px; box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);">
         <form class="appointment-with-specialization-select">
           <mat-form-field class="appointment-with-specialization-full-width">
             <mat-label>{{'SPECIALIZATION' | translate}}</mat-label>
             <input type="text" matInput [formControl]="specializationControl" [matAutocomplete]="auto">
-            <mat-icon matSuffix (click)="specializationControl.setValue('')" style="font-size: 10pt; color: #e49c9c; cursor: pointer" >clear</mat-icon>
+            <mat-icon matSuffix (click)="specializationControl.setValue('')"
+                      style="font-size: 10pt; color: #e49c9c; cursor: pointer">clear
+            </mat-icon>
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
                               (optionSelected)="select($event.option.value)">
               <mat-option *ngFor="let option of filteredSpecializations | async" [value]="option">
@@ -39,8 +42,8 @@
           <td mat-cell *matCellDef="let element"> {{element.middleName}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="doctorSpecialization" >
-          <th mat-header-cell *matHeaderCellDef >{{'SPECIALIZATION' | translate}}</th>
+        <ng-container matColumnDef="doctorSpecialization">
+          <th mat-header-cell *matHeaderCellDef>{{'SPECIALIZATION' | translate}}</th>
           <td mat-cell *matCellDef="let element"> {{element.doctorSpecialization.localizedName}} </td>
         </ng-container>
 
@@ -55,10 +58,10 @@
               style="background-color: rgb(245, 253, 255)">
             <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
               <mat-card style="min-width: 20%">
-                <div style="margin-bottom: 5px">Дата: </div>
+                <div style="margin-bottom: 5px">Дата:</div>
                 <mat-form-field class="example-full-width">
-                  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" [value]="time"
-                         [formControl]="date" (dateChange)="refreshDate($event.value)">
+                  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+                         [formControl]="date" (dateChange)="refreshDate($event.value, element)">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -67,13 +70,13 @@
               <mat-card style="min-width: 20%">
                 <div>
                   <div> Часы приема:</div>
-                  <div style="color: #80b93d; text-align: center;font-size: 25pt;padding-top: 20px;"> 9:00 - 17:00</div>
+                  <div style="color: #80b93d; text-align: center;font-size: 25pt;padding-top: 20px;" *ngIf="element.ticketsInfo"> {{element.ticketsInfo.startAppointmentTime | date:'h:mm'}} - {{element.ticketsInfo.finishAppointmentTime | date:'H:mm'}}</div>
                 </div>
               </mat-card>
 
               <mat-card style="min-width: 20%">
                 <div> Свободно талонов:</div>
-                <div style="color: #7fb9b9; text-align: center;font-size: 25pt;padding-top: 20px;"> 56</div>
+                <div style="color: #7fb9b9; text-align: center;font-size: 25pt;padding-top: 20px;" *ngIf="element.ticketsInfo"> {{count(element)}}</div>
               </mat-card>
 
               <mat-card style="width: 10%; background-color: #f5f8fb;">
@@ -86,7 +89,7 @@
 
               <mat-card style="width: 100%;  display: flex;align-items: center;justify-content: center;">
                 <span class="material-icons" style="font-size: 40pt; color: #0c5687; cursor: pointer"
-                      matTooltip="Запись">playlist_add</span>
+                      matTooltip="Запись" (click)="test(element.id)">playlist_add</span>
               </mat-card>
             </div>
           </td>

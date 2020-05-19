@@ -1,5 +1,6 @@
 import {BaseDto} from "./base-dto";
 import {DoctorSpecialization} from "./doctor-specialization";
+import {Timetable} from "./timetable";
 
 export class Doctor extends BaseDto {
   firstName: string;
@@ -7,4 +8,5 @@ export class Doctor extends BaseDto {
   lastName: string;
   doctorSpecialization: DoctorSpecialization;
   cabinet: string;
+  ticketsInfo: Timetable
 }

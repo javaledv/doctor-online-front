@@ -1,14 +1,21 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {merge, Observable, of as observableOf} from "rxjs";
 import {Doctor, DoctorSpecialization} from "../../dto";
-import {DoctorSpecializationService} from "../../service/doctor-specialization/doctor-specialization.service";
+import {DoctorService, DoctorSpecializationService} from "../../service";
 import {TranslateService} from "@ngx-translate/core";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatTableDataSource} from "@angular/material/table";
 import {catchError, map, startWith, switchMap} from "rxjs/operators";
-import {DoctorService} from "../../service";
+import {SocketClientService} from "../../client/socket-client.service";
+import {Ticket} from "../../dto/ticket";
+import {TimetableService} from "../../service/timetable/timetable.service";
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter
+} from "@angular/material-moment-adapter";
 
 @Component({
   selector: 'appointment-with-doctor',
@@ -21,8 +28,19 @@ import {DoctorService} from "../../service";
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
+  providers: [
+    {
+      provide: MAT_DATE_LOCALE, useValue: 'ru-RU'
+    },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 })
-export class AppointmentWithDoctorComponent implements OnInit {
+export class AppointmentWithDoctorComponent implements OnInit, OnDestroy {
 
   specializationControl = new FormControl();
   specializations: DoctorSpecialization[] = [];
@@ -44,14 +62,27 @@ export class AppointmentWithDoctorComponent implements OnInit {
   maxDate: Date;
   date = new FormControl(new Date());
 
-
   ngOnInit(): void {
+    this.socketClientService.init();
     this.updateTable()
+  }
+
+  ngOnDestroy(): void {
+  }
+
+  ticketCounts(counts) {
+    this.socketClientService.onMessage("/topic/doctor/tickets")
+      .subscribe(ticketsInfo => {
+        counts.ticketsInfo = ticketsInfo
+      });
+    this.socketClientService.send("/topic/doctor/tickets/update", new Ticket());
   }
 
   constructor(private doctorSpecializationService: DoctorSpecializationService,
               private doctorService: DoctorService,
-              private translate: TranslateService,) {
+              private translate: TranslateService,
+              private socketClientService: SocketClientService,
+              private timetableService: TimetableService) {
     this.doctorSpecializationService.getAll().subscribe(specializations => {
       let allName = '';
       translate.get('ALL').subscribe(value => allName = value);
@@ -70,9 +101,9 @@ export class AppointmentWithDoctorComponent implements OnInit {
         );
     }, error => console.log(error));
 
-    const currentYear = new Date().getFullYear();
-    this.minDate = new Date(currentYear - 20, 0, 1);
-    this.maxDate = new Date(currentYear + 1, 11, 31);
+    this.minDate = new Date();
+    this.maxDate = new Date();
+    this.maxDate.setDate(this.maxDate.getDate() + 29);
   }
 
   displayFn(specialization: DoctorSpecialization): string {
@@ -125,10 +156,34 @@ export class AppointmentWithDoctorComponent implements OnInit {
         })
       ).subscribe(data => {
       this.doctors = data;
+      for (let doctor of this.doctors) {
+        this.timetableService.getIdBy(new Date(), doctor.id).subscribe(id => {
+          this.socketClientService.onMessage("/topic/timetable/" + id)
+            .subscribe(ticketsInfo => {
+              doctor.ticketsInfo = ticketsInfo
+            });
+          this.socketClientService.send("/app/timetable/" + id, null);
+        })
+      }
     });
   }
 
-  refreshDate(value) {
-    console.log(value)
+  count(doctor: Doctor) {
+    return doctor.ticketsInfo.tickets.filter(ticket => !ticket.reserved).length
+  }
+
+  test(id) {
+    this.socketClientService.send("/app/timetable/" + id, null);
+  }
+
+  refreshDate(value, doctor) {
+    console.log(value);
+    this.timetableService.getIdBy(value, doctor.id).subscribe(id => {
+      this.socketClientService.onMessage("/topic/timetable/" + id)
+        .subscribe(ticketsInfo => {
+          doctor.ticketsInfo = ticketsInfo
+        });
+      this.socketClientService.send("/app/timetable/" + id, null);
+    })
   }
 }

@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, throwError} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Principal} from "../../dto";
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-import {catchError, map} from "rxjs/operators";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
+import {SocketClientService} from "../../client/socket-client.service";
 
 const AUTH_LOGIN_PATH = "/api/auth/login";
 
@@ -64,10 +65,10 @@ export class AuthService {
   logout() {
     this.httpClient.post("/api/auth/logout", null)
       .subscribe(response => {
-        console.log("Logout ok ")
+        console.log("Logout ok ");
         this.localLogout()
       }, error => {
-        console.log("Logout error")
+        console.log("Logout error");
         this.localLogout()
       })
   }
