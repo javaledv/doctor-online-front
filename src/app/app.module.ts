@@ -14,9 +14,16 @@ import {DashboardComponent, ProfileDialog} from './component/dashboard/dashboard
 import {RegisterComponent} from './component/register/register.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {AppointmentWithDoctorComponent} from './component/appointment-with-doctor/appointment-with-doctor.component';
+import {
+  AppointmentDialog,
+  AppointmentWithDoctorComponent
+} from './component/appointment-with-doctor/appointment-with-doctor.component';
 import {MatPaginatorIntl} from "@angular/material/paginator";
 import {BasicAuthInterceptor, CustomMatPaginatorIntl} from "./helper";
+import localeRu from '@angular/common/locales/ru';
+import {registerLocaleData} from "@angular/common";
+registerLocaleData(localeRu);
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -29,7 +36,8 @@ export function createTranslateLoader(http: HttpClient) {
     DashboardComponent,
     RegisterComponent,
     ProfileDialog,
-    AppointmentWithDoctorComponent
+    AppointmentWithDoctorComponent,
+    AppointmentDialog
   ],
   imports: [
     BrowserModule,

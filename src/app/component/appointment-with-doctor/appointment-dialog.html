@@ -1,0 +1,42 @@
+<div class="appointment-dialog-root">
+  <h1 mat-dialog-title>{{data.doctor.lastName}} {{data.doctor.firstName}} {{data.doctor.middleName}}</h1>
+  <mat-divider></mat-divider>
+  <h3>{{data.doctor.doctorSpecialization.localizedName}}</h3>
+  <mat-divider></mat-divider>
+  <h3>Кабинет {{data.doctor.cabinet}}</h3>
+  <mat-divider></mat-divider>
+
+  <div mat-dialog-content class="appointment-dialog-content">
+    <mat-nav-list class="content-list">
+      <mat-list-item *ngFor="let ticket of data.doctor.ticketsInfo.tickets" class="ticket-card" (click)="selectTicket(data.doctor.ticketsInfo.id, ticket)" [style.background-color]="getBackgroundColor(ticket)">
+        <div>{{ticket.time | date: 'hh:mm'}}</div>
+      </mat-list-item>
+
+      <div class="calendar-box">
+        <div class="calendar-day-card">
+          <div class="day-card-header">
+          </div>
+          <div class="calendar-liter-day">
+            {{data.doctor.ticketsInfo.date | date: "EEE"}}
+          </div>
+          <div class="calendar-num-day">
+            {{data.doctor.ticketsInfo.date | date: "dd"}}
+          </div>
+          <div class="calendar-month">
+            {{data.doctor.ticketsInfo.date | date: "LLLL"}}
+          </div>
+          <div class="calendar-year">
+            {{data.doctor.ticketsInfo.date | date: "yyyy"}}
+          </div>
+        </div>
+      </div>
+    </mat-nav-list>
+  </div>
+
+  <div mat-dialog-actions class="appointment-dialog-actions">
+    <button mat-button mat-raised-button color="primary"
+            (click)="appointment()">{{'APPOINTMENT_WITH_DOCTOR' | translate}}</button>
+    <button mat-button mat-raised-button color="accent" (click)="close()">{{'CLOSE' | translate}}</button>
+  </div>
+</div>
+

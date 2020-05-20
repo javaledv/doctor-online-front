@@ -1,6 +1,8 @@
+import {TicketStatus} from "./ticket-status";
+
 export class Ticket {
   id: number;
-  reserved: boolean;
-  startAppointmentTime: Date;
-  finishAppointmentTime: Date;
+  ticketStatus: string;
+  time: Date;
+  userId: number;
 }

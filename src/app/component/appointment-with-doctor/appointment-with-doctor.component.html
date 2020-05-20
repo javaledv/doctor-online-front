@@ -70,13 +70,16 @@
               <mat-card style="min-width: 20%">
                 <div>
                   <div> Часы приема:</div>
-                  <div style="color: #80b93d; text-align: center;font-size: 25pt;padding-top: 20px;" *ngIf="element.ticketsInfo"> {{element.ticketsInfo.startAppointmentTime | date:'h:mm'}} - {{element.ticketsInfo.finishAppointmentTime | date:'H:mm'}}</div>
+                  <div style="color: #80b93d; text-align: center;font-size: 25pt;padding-top: 20px;"
+                       *ngIf="element.ticketsInfo"> {{element.ticketsInfo.startAppointmentTime | date:'h:mm'}}
+                    - {{element.ticketsInfo.finishAppointmentTime | date:'H:mm'}}</div>
                 </div>
               </mat-card>
 
               <mat-card style="min-width: 20%">
                 <div> Свободно талонов:</div>
-                <div style="color: #7fb9b9; text-align: center;font-size: 25pt;padding-top: 20px;" *ngIf="element.ticketsInfo"> {{count(element)}}</div>
+                <div style="color: #7fb9b9; text-align: center;font-size: 25pt;padding-top: 20px;"
+                     *ngIf="element.ticketsInfo"> {{count(element)}}</div>
               </mat-card>
 
               <mat-card style="width: 10%; background-color: #f5f8fb;">
@@ -89,7 +92,7 @@
 
               <mat-card style="width: 100%;  display: flex;align-items: center;justify-content: center;">
                 <span class="material-icons" style="font-size: 40pt; color: #0c5687; cursor: pointer"
-                      matTooltip="Запись" (click)="test(element.id)">playlist_add</span>
+                      matTooltip="Запись" (click)="openAppointmentDialog(element)">playlist_add</span>
               </mat-card>
             </div>
           </td>

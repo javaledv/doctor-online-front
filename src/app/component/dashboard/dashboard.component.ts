@@ -8,14 +8,9 @@ import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
-import {Patient} from "../../dto/patient";
-import {PatientService} from "../../service/patient/patient.service";
+import {Doctor, Patient} from "../../dto";
+import {PatientService} from "../../service";
 import {ActivatedRoute, Router} from "@angular/router";
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +19,6 @@ export interface DialogData {
 })
 export class DashboardComponent implements OnInit {
 
-  animal: string;
   name: string;
 
   ngOnInit(): void {
@@ -45,12 +39,11 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
   }
 
   redirect(path: string) {
-    this.router.navigate([path], { relativeTo: this.route });
+    this.router.navigate([path], {relativeTo: this.route});
   }
 
 }
@@ -102,7 +95,6 @@ export class ProfileDialog implements OnInit {
   }
 
   constructor(public dialogRef: MatDialogRef<ProfileDialog>,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,
               private _formBuilder: FormBuilder,
               private authService: AuthService,
               private patientService: PatientService,

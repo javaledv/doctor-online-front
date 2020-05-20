@@ -47,6 +47,8 @@
   "ITEMS_PER_PAGE": "Всего элементов",
   "NEXT_PAGE": "Следующая",
   "PREVIOUS_PAGE": "Предыдущая",
-  "OF_LABEL": "из"
+  "OF_LABEL": "из",
+  "APPOINTMENT": "Запись",
+  "CLOSE": "Закрыть"
 }
 

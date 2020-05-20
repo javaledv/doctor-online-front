@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {merge, Observable, of as observableOf} from "rxjs";
 import {Doctor, DoctorSpecialization} from "../../dto";
-import {DoctorService, DoctorSpecializationService} from "../../service";
+import {AuthService, DoctorService, DoctorSpecializationService} from "../../service";
 import {TranslateService} from "@ngx-translate/core";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatPaginator} from "@angular/material/paginator";
@@ -17,6 +17,12 @@ import {
   MomentDateAdapter
 } from "@angular/material-moment-adapter";
 import * as moment from 'moment'
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {TicketStatus} from "../../dto/ticket-status";
+
+export interface DialogData {
+  doctor: Doctor;
+}
 
 @Component({
   selector: 'appointment-with-doctor',
@@ -84,7 +90,8 @@ export class AppointmentWithDoctorComponent implements OnInit, OnDestroy {
               private doctorService: DoctorService,
               private translate: TranslateService,
               private socketClientService: SocketClientService,
-              private timetableService: TimetableService) {
+              private timetableService: TimetableService,
+              public dialog: MatDialog) {
     this.doctorSpecializationService.getAll().subscribe(specializations => {
       let allName = '';
       translate.get('ALL').subscribe(value => allName = value);
@@ -171,11 +178,7 @@ export class AppointmentWithDoctorComponent implements OnInit, OnDestroy {
   }
 
   count(doctor: Doctor) {
-    return doctor.ticketsInfo.tickets.filter(ticket => !ticket.reserved).length
-  }
-
-  test(id) {
-    this.socketClientService.send("/app/timetable/" + id, null);
+    return doctor.ticketsInfo.tickets.filter(ticket => ticket.ticketStatus === "OPENED").length
   }
 
   refreshDate(value, doctor) {
@@ -188,4 +191,68 @@ export class AppointmentWithDoctorComponent implements OnInit, OnDestroy {
       this.socketClientService.send("/app/timetable/" + id, null);
     })
   }
+
+  openAppointmentDialog(doctor: Doctor): void {
+    const dialogRef = this.dialog.open(AppointmentDialog, {
+      height: '550px',
+      width: '700px',
+      disableClose: true,
+      data: {
+        doctor: doctor
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+}
+
+@Component({
+  selector: 'appointment-dialog',
+  templateUrl: 'appointment-dialog.html',
+  styleUrls: ['./appointment-with-doctor.component.css'],
+  providers: [{provide: LOCALE_ID, useValue: 'ru'}]
+})
+
+export class AppointmentDialog implements OnInit {
+
+  ngOnInit() {
+  }
+
+  constructor(public dialogRef: MatDialogRef<AppointmentDialog>,
+              @Inject(MAT_DIALOG_DATA) public data: DialogData,
+              private authService: AuthService,
+              private socketClientService: SocketClientService) {
+  }
+
+  close(): void {
+    this.dialogRef.close()
+  }
+
+  appointment() {
+    this.dialogRef.close()
+  }
+
+  isActive(ticket: Ticket): boolean {
+    return ticket.ticketStatus === "SELECTED"
+  }
+
+  getBackgroundColor(ticket: Ticket): string {
+    if (ticket.ticketStatus === "DONE") {
+      return "rgba(214,214,214,0.24)"
+    } else if (ticket.ticketStatus === "RESERVED") {
+      return "#6babe23d"
+    } else if (ticket.ticketStatus === "SELECTED") {
+      return "rgba(226,35,20,0.24)"
+    }
+    return "#6babe23d";
+  }
+
+  selectTicket(timetableId: number, ticket: Ticket) {
+    ticket.ticketStatus = "SELECTED";
+    ticket.userId = this.authService.principalValue.id;
+    this.socketClientService.send("/app/timetable/" + timetableId + "/ticket/update", ticket);
+  }
+
 }
