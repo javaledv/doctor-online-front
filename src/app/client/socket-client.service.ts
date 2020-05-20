@@ -63,6 +63,10 @@ export class SocketClientService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.disconnect();
+  }
+
+  disconnect(): void {
     this.connect().pipe(first()).subscribe(client => {
       client.disconnect(null)
     })

@@ -16,6 +16,7 @@ import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter
 } from "@angular/material-moment-adapter";
+import * as moment from 'moment'
 
 @Component({
   selector: 'appointment-with-doctor',
@@ -68,6 +69,7 @@ export class AppointmentWithDoctorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.socketClientService.disconnect();
   }
 
   ticketCounts(counts) {
@@ -157,7 +159,7 @@ export class AppointmentWithDoctorComponent implements OnInit, OnDestroy {
       ).subscribe(data => {
       this.doctors = data;
       for (let doctor of this.doctors) {
-        this.timetableService.getIdBy(new Date(), doctor.id).subscribe(id => {
+        this.timetableService.getIdBy(moment(new Date()), doctor.id).subscribe(id => {
           this.socketClientService.onMessage("/topic/timetable/" + id)
             .subscribe(ticketsInfo => {
               doctor.ticketsInfo = ticketsInfo

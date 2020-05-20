@@ -3,6 +3,7 @@ import {AbstractBaseCrudService} from "../abstract-base-crud.service";
 import {Timetable} from "../../dto/timetable";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Moment} from "moment";
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,9 @@ export class TimetableService extends AbstractBaseCrudService<Timetable> {
     super(httpClient)
   }
 
-  getIdBy(date: Date, doctorId: number): Observable<number> {
+  getIdBy(moment: Moment, doctorId: number): Observable<number> {
     let params = {
-      "date": date.toISOString(),
+      "date": moment.format("YYYY-MM-DD"),
       "doctorId": String(doctorId)
     };
 
