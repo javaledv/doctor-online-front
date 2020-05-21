@@ -60,12 +60,6 @@ tr.example-element-row:not(.example-expanded-row):active {
   opacity: 0.5;
 }
 
-.appointment-table-paginator {
-  background-color: rgba(255, 125, 33, 0);
-  margin-top: 65px;
-  margin-right: 10px;
-}
-
 .mat-cell {
   padding: 0px 0px 0px 0;
 }

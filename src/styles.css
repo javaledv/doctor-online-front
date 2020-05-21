@@ -30,6 +30,8 @@ body {
 }
 
 .dashboard-content-component-content {
+  flex-direction: column;
+  display: flex;
   margin-left: 23px;
   margin-right: 23px;
   min-width: 95%;
@@ -46,5 +48,16 @@ body {
 }
 
 .dashboard-content-component-content-table {
+  flex-direction: column;
+  display: flex;
+  height: 100%;
+}
 
+.dashboard-content-component-content-table-paginator {
+  display: flex;
+  justify-content: flex-end;
+  background-color: rgba(255, 125, 33, 0);
+  margin-top: auto;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }

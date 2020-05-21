@@ -85,7 +85,7 @@ export class AppointmentWithDoctorComponent implements OnInit {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 4000,
-      horizontalPosition: "end",
+      horizontalPosition: "center",
       verticalPosition: "bottom",
       panelClass: ['snackbar']
     }).onAction().subscribe(() =>
