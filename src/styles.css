@@ -13,3 +13,38 @@ body {
   background: #0c5687;
 }
 
+.dashboard-content-component-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: stretch;
+}
+
+.dashboard-content-component-header {
+  width: 97%;
+  margin-left: 30px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #0c5687;
+  font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+}
+
+.dashboard-content-component-content {
+  margin-left: 23px;
+  margin-right: 23px;
+  min-width: 95%;
+  max-width: 98%;
+  height: 97%;
+  background-color: rgb(245, 253, 255);
+  border-radius: 15px;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+}
+
+.dashboard-content-component-content-search-header {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.dashboard-content-component-content-table {
+
+}

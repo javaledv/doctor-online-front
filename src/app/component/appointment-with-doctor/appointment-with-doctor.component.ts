@@ -19,6 +19,8 @@ import {
 import * as moment from 'moment'
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {TicketStatus} from "../../dto/ticket-status";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ActivatedRoute, Router} from "@angular/router";
 
 export interface DialogData {
   doctor: Doctor;
@@ -47,7 +49,7 @@ export interface DialogData {
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   ],
 })
-export class AppointmentWithDoctorComponent implements OnInit, OnDestroy {
+export class AppointmentWithDoctorComponent implements OnInit {
 
   specializationControl = new FormControl();
   specializations: DoctorSpecialization[] = [];
@@ -70,20 +72,26 @@ export class AppointmentWithDoctorComponent implements OnInit, OnDestroy {
   date = new FormControl(new Date());
 
   ngOnInit(): void {
-    this.socketClientService.init();
     this.updateTable()
+    this.socketClientService.onMessage("/user/topic/timetable/updated").subscribe(timetable => {
+      for (const ticket of timetable.tickets) {
+          if (ticket.id === timetable.updatedTicketId && ticket.ticketStatus === "RESERVED") {
+              this.openSnackBar("Запись успешно дабавлена!", "Мои записи")
+          }
+      }
+    })
   }
 
-  ngOnDestroy(): void {
-    this.socketClientService.disconnect();
-  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 4000,
+      horizontalPosition: "end",
+      verticalPosition: "bottom",
+      panelClass: ['snackbar']
+    }).onAction().subscribe(() =>
+      this.router.navigate(["appointments/my"], {relativeTo: this.route.parent})
+    );
 
-  ticketCounts(counts) {
-    this.socketClientService.onMessage("/topic/doctor/tickets")
-      .subscribe(ticketsInfo => {
-        counts.ticketsInfo = ticketsInfo
-      });
-    this.socketClientService.send("/topic/doctor/tickets/update", new Ticket());
   }
 
   constructor(private doctorSpecializationService: DoctorSpecializationService,
@@ -91,7 +99,10 @@ export class AppointmentWithDoctorComponent implements OnInit, OnDestroy {
               private translate: TranslateService,
               private socketClientService: SocketClientService,
               private timetableService: TimetableService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private _snackBar: MatSnackBar,
+              private router: Router,
+              private route: ActivatedRoute) {
     this.doctorSpecializationService.getAll().subscribe(specializations => {
       let allName = '';
       translate.get('ALL').subscribe(value => allName = value);

@@ -92,3 +92,8 @@
   justify-content: space-between;
   height: 250px;
 }
+
+.counter-style {
+  color: #e49cdb;; margin-left: auto;
+  margin-right: 8px;
+}

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {AuthService} from "../../service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -11,20 +11,30 @@ import {
 import {Doctor, Patient} from "../../dto";
 import {PatientService} from "../../service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {SocketClientService} from "../../client/socket-client.service";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   name: string;
 
   ngOnInit(): void {
+    this.socketClientService.init();
   }
 
-  constructor(public dialog: MatDialog, private authService: AuthService, private router: Router, private route: ActivatedRoute) {
+  ngOnDestroy(): void {
+    this.socketClientService.disconnect();
+  }
+
+  constructor(public dialog: MatDialog,
+              private authService: AuthService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private socketClientService: SocketClientService) {
     if (!authService.principalValue.active) {
       this.openDialog()
     }
@@ -45,6 +55,7 @@ export class DashboardComponent implements OnInit {
   redirect(path: string) {
     this.router.navigate([path], {relativeTo: this.route});
   }
+
 
 }
 

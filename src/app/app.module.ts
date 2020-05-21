@@ -22,6 +22,9 @@ import {MatPaginatorIntl} from "@angular/material/paginator";
 import {BasicAuthInterceptor, CustomMatPaginatorIntl} from "./helper";
 import localeRu from '@angular/common/locales/ru';
 import {registerLocaleData} from "@angular/common";
+import { MyAppointmentsComponent } from './component/my-appointments/my-appointments.component';
+import { PaidOperationsComponent } from './component/paid-operations/paid-operations.component';
+import { CardComponent } from './component/card/card.component';
 registerLocaleData(localeRu);
 
 
@@ -37,7 +40,10 @@ export function createTranslateLoader(http: HttpClient) {
     RegisterComponent,
     ProfileDialog,
     AppointmentWithDoctorComponent,
-    AppointmentDialog
+    AppointmentDialog,
+    MyAppointmentsComponent,
+    PaidOperationsComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

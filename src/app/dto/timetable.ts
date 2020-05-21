@@ -4,8 +4,10 @@ export class Timetable {
   id: number;
   doctorId: number;
   date: Date;
-  tickets: Ticket []
+  tickets: Ticket [];
 
   startAppointmentTime: Date;
   finishAppointmentTime: Date;
+
+  updatedTicketId: number;
 }

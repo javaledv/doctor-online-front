@@ -1,9 +1,9 @@
-<div class="appointment-with-doctor-root">
-  <div class="appointment-with-doctor-header">
+<div class="dashboard-content-component-root">
+  <div class="dashboard-content-component-header">
     <h1 style="width: 100%; height: 100%; font-size: 30px">{{'APPOINTMENT_WITH_DOCTOR' | translate}}</h1>
   </div>
-  <div class="appointment-with-doctor-content">
-    <div class="appointment-with-doctor-content-search-header">
+  <div class="dashboard-content-component-content">
+    <div class="dashboard-content-component-content-search-header">
       <mat-card
         style="margin-right: 30px; box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);">
         <form class="appointment-with-specialization-select">
@@ -24,7 +24,7 @@
       </mat-card>
 
     </div>
-    <div class="appointment-with-doctor-content-table">
+    <div class="dashboard-content-component-content-table">
       <table mat-table [dataSource]="doctors" multiTemplateDataRows class="mat-elevation-z8">
 
         <ng-container matColumnDef="lastName">
