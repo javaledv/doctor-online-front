@@ -179,7 +179,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 ::ng-deep snack-bar-container.snackbar {
   background: white !important;
   color: black;
-  margin-right: 55px !important;
+  margin-top: 70px !important;
 }
 
 ::ng-deep snack-bar-container.snackbar button{

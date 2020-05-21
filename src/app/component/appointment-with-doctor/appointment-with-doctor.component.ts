@@ -85,8 +85,8 @@ export class AppointmentWithDoctorComponent implements OnInit {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 4000,
-      horizontalPosition: "center",
-      verticalPosition: "bottom",
+      horizontalPosition: "end",
+      verticalPosition: "top",
       panelClass: ['snackbar']
     }).onAction().subscribe(() =>
       this.router.navigate(["appointments/my"], {relativeTo: this.route.parent})
