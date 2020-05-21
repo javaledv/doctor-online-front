@@ -217,6 +217,8 @@ export class AppointmentWithDoctorComponent implements OnInit, OnDestroy {
 
 export class AppointmentDialog implements OnInit {
 
+  selectedTicket: Ticket;
+
   ngOnInit() {
   }
 
@@ -227,32 +229,44 @@ export class AppointmentDialog implements OnInit {
   }
 
   close(): void {
+    if (this.selectedTicket) {
+        this.selectedTicket.ticketStatus = "OPENED";
+        this.socketClientService.send("/app/timetable/" + this.selectedTicket.timetableId + "/ticket/update", this.selectedTicket);
+
+        this.selectedTicket = null;
+    }
     this.dialogRef.close()
   }
 
   appointment() {
+    if (this.selectedTicket) {
+      this.selectedTicket.ticketStatus = "RESERVED";
+      this.socketClientService.send("/app/timetable/" + this.selectedTicket.timetableId + "/ticket/update", this.selectedTicket);
+    }
     this.dialogRef.close()
   }
 
-  isActive(ticket: Ticket): boolean {
-    return ticket.ticketStatus === "SELECTED"
-  }
-
   getBackgroundColor(ticket: Ticket): string {
-    if (ticket.ticketStatus === "DONE") {
-      return "rgba(214,214,214,0.24)"
+    if (ticket.ticketStatus === "DONE" || (ticket.userId != this.authService.principalValue.id && ticket.ticketStatus === "SELECTED")) {
+      return "#cccdce6b"
     } else if (ticket.ticketStatus === "RESERVED") {
-      return "#6babe23d"
+      return "#cccdce6b"
     } else if (ticket.ticketStatus === "SELECTED") {
-      return "rgba(226,35,20,0.24)"
+      return "#14e2243d"
     }
     return "#6babe23d";
   }
 
-  selectTicket(timetableId: number, ticket: Ticket) {
+  selectTicket(ticket: Ticket) {
+
+    if (ticket.ticketStatus != "OPENED") {
+      return;
+    }
+
     ticket.ticketStatus = "SELECTED";
     ticket.userId = this.authService.principalValue.id;
-    this.socketClientService.send("/app/timetable/" + timetableId + "/ticket/update", ticket);
-  }
+    this.socketClientService.send("/app/timetable/" + ticket.timetableId + "/ticket/update", ticket);
 
+    this.selectedTicket = ticket
+  }
 }

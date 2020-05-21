@@ -8,10 +8,9 @@
 
   <div mat-dialog-content class="appointment-dialog-content">
     <mat-nav-list class="content-list">
-      <mat-list-item *ngFor="let ticket of data.doctor.ticketsInfo.tickets" class="ticket-card" (click)="selectTicket(data.doctor.ticketsInfo.id, ticket)" [style.background-color]="getBackgroundColor(ticket)">
-        <div>{{ticket.time | date: 'hh:mm'}}</div>
+      <mat-list-item *ngFor="let ticket of data.doctor.ticketsInfo.tickets" class="ticket-card" (click)="selectTicket(ticket)" [style.background-color]="getBackgroundColor(ticket)">
+        <div>{{ticket.time | date: 'H:mm'}}</div>
       </mat-list-item>
-
       <div class="calendar-box">
         <div class="calendar-day-card">
           <div class="day-card-header">
@@ -34,8 +33,8 @@
   </div>
 
   <div mat-dialog-actions class="appointment-dialog-actions">
-    <button mat-button mat-raised-button color="primary"
-            (click)="appointment()">{{'APPOINTMENT_WITH_DOCTOR' | translate}}</button>
+    <button mat-button mat-raised-button color="primary" [disabled] = "!selectedTicket"
+            (click)="appointment()">{{'APPOINTMENT' | translate}}</button>
     <button mat-button mat-raised-button color="accent" (click)="close()">{{'CLOSE' | translate}}</button>
   </div>
 </div>

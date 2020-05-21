@@ -5,4 +5,5 @@ export class Ticket {
   ticketStatus: string;
   time: Date;
   userId: number;
+  timetableId: number;
 }
