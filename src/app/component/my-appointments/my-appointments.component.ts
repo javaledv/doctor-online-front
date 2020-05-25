@@ -26,6 +26,9 @@ export class MyAppointmentsComponent implements AfterViewInit, OnInit {
   isLoadingResults = true;
   isRateLimitReached = false;
 
+  statusFilter = "";
+  allStatuses = ["ALL", "RESERVED", "EXPIRED", "DONE"];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -61,9 +64,14 @@ export class MyAppointmentsComponent implements AfterViewInit, OnInit {
 
   }
 
+  statusFilterChanged(status) {
+    this.statusFilter = status;
+    this.updateTable();
+  }
+
   createSearchParams(): string {
     let result = '?';
-    result = result + `patientId=${this.authService.principalValue.id}&`;
+    result = result + `patientId=${this.authService.principalValue.id}&status=${this.statusFilter == "ALL" ? '' : this.statusFilter}&`;
     return result;
   }
 
