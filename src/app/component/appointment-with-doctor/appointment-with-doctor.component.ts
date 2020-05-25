@@ -71,7 +71,38 @@ export class AppointmentWithDoctorComponent implements OnInit {
   date = new FormControl(new Date());
 
   ngOnInit(): void {
-    this.updateTable();
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.doctorService!.list(this.createSearchParams(), this.paginator.pageIndex);
+        }),
+        map(data => {
+          this.isLoadingResults = false;
+          this.isRateLimitReached = false;
+          this.resultsLength = data.totalElements;
+          this.pageSize = data.numberOfElements;
+
+          return data.content;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          this.isRateLimitReached = true;
+          return observableOf([]);
+        })
+      ).subscribe(data => {
+      this.doctors = data;
+      for (let doctor of this.doctors) {
+        this.timetableService.getIdBy(moment(new Date()), doctor.id).subscribe(id => {
+          this.socketClientService.onMessage("/topic/timetable/" + id)
+            .subscribe(ticketsInfo => {
+              doctor.ticketsInfo = ticketsInfo
+            });
+          this.socketClientService.send("/app/timetable/" + id, null);
+        })
+      }
+    });
     this.socketClientService.onMessage("/user/topic/timetable/updated").subscribe(timetable => {
       for (const ticket of timetable.tickets) {
         if (ticket.id === timetable.updatedTicketId && ticket.ticketStatus === "RESERVED") {
@@ -153,38 +184,7 @@ export class AppointmentWithDoctorComponent implements OnInit {
   }
 
   updateTable() {
-    merge(this.paginator.page)
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          this.isLoadingResults = true;
-          return this.doctorService!.list(this.createSearchParams(), this.paginator.pageIndex);
-        }),
-        map(data => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = false;
-          this.resultsLength = data.totalElements;
-          this.pageSize = data.numberOfElements;
-
-          return data.content;
-        }),
-        catchError(() => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = true;
-          return observableOf([]);
-        })
-      ).subscribe(data => {
-      this.doctors = data;
-      for (let doctor of this.doctors) {
-        this.timetableService.getIdBy(moment(new Date()), doctor.id).subscribe(id => {
-          this.socketClientService.onMessage("/topic/timetable/" + id)
-            .subscribe(ticketsInfo => {
-              doctor.ticketsInfo = ticketsInfo
-            });
-          this.socketClientService.send("/app/timetable/" + id, null);
-        })
-      }
-    });
+    this.paginator._changePageSize(this.paginator.pageSize);
   }
 
   count(doctor: Doctor) {

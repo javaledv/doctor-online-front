@@ -61,7 +61,6 @@ export class MyAppointmentsComponent implements AfterViewInit, OnInit {
     }).onAction().subscribe(() =>
       this.router.navigate(["appointments/create"], {relativeTo: this.route.parent})
     );
-
   }
 
   statusFilterChanged(status) {
@@ -76,10 +75,11 @@ export class MyAppointmentsComponent implements AfterViewInit, OnInit {
   }
 
   updateTable() {
+    this.paginator._changePageSize(this.paginator.pageSize);
+  }
 
-    // If the user changes the sort order, reset back to the first page.
+  ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
@@ -107,10 +107,6 @@ export class MyAppointmentsComponent implements AfterViewInit, OnInit {
       this.data = data;
       console.log(data)
     });
-  }
-
-  ngAfterViewInit() {
-    this.updateTable()
   }
 
   getColor(ticket: Ticket): string {
