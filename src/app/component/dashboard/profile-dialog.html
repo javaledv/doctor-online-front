@@ -82,7 +82,7 @@
         </form>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>{{'DONE' | translate}}</ng-template>
+        <ng-template matStepLabel>{{'COMPLETED' | translate}}</ng-template>
         <div class="profile-dialog-total">
           <div>
             <p>{{'LAST_NAME' | translate}}: {{patient.lastName}}</p>
@@ -108,7 +108,7 @@
   </div>
   <div mat-dialog-actions class="profile-dialog-actions">
     <button mat-button mat-raised-button color="primary" (click)="save()"
-            [disabled]="!isDone()">{{'DONE' | translate}}</button>
+            [disabled]="!isDone()">{{'COMPLETED' | translate}}</button>
     <button mat-button mat-raised-button color="accent" (click)="logout()">{{'LOGOUT' | translate}}</button>
   </div>
 </div>

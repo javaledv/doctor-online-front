@@ -25,6 +25,7 @@ import {MatTreeModule} from "@angular/material/tree";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCardModule} from "@angular/material/card";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSortModule} from "@angular/material/sort";
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MatTreeModule,
     MatAutocompleteModule,
     MatCardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSortModule
   ],
   exports: [
     MatMenuModule,
@@ -78,7 +80,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MatTreeModule,
     MatAutocompleteModule,
     MatCardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSortModule
   ],
   providers: [
     MatDatepickerModule,

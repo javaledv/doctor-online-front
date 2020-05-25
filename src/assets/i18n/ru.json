@@ -17,7 +17,7 @@
   "FILL_OUT_FORM_MESSAGE": "Пожалуйста, заполните информацию о себе",
   "PERSONAL_INFORMATION": "Персональные данные",
   "ADDRESS": "Адрес",
-  "DONE": "Готово",
+  "COMPLETED": "Готово",
   "LAST_NAME": "Фамилия",
   "FIRST_NAME": "Имя",
   "MIDDLE_NAME": "Отчество",
@@ -44,12 +44,22 @@
   "middleName": "Отчество",
   "doctorSpecialization": "Специализация",
   "CABINET": "Кабинет",
-  "ITEMS_PER_PAGE": "Всего элементов",
+  "ITEMS_PER_PAGE": "Элементов на странице",
   "NEXT_PAGE": "Следующая",
   "PREVIOUS_PAGE": "Предыдущая",
   "OF_LABEL": "из",
   "APPOINTMENT": "Запись",
   "CLOSE": "Закрыть",
-  "MY_APPOINTMENTS": "Мои записи"
+  "MY_APPOINTMENTS": "Мои записи",
+  "DOCTOR": "Доктор",
+  "DATE": "Дата",
+  "TIME": "Время",
+  "STATUS": "Статус",
+  "RESERVED": "В ожидании приема",
+  "EXPIRED": "Просрочен",
+  "DONE": "Завершен",
+  "YES": "Да",
+  "NO": "Нет",
+  "CONFIRM_MESSAGE": "Вы действительно хотите отменить запись?"
 }
 

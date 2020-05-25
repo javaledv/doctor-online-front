@@ -1,0 +1,7 @@
+<div mat-dialog-content>
+  <p>{{'CONFIRM_MESSAGE' | translate}}</p>
+</div>
+<div mat-dialog-actions class="confirm-dialog-actions">
+  <button mat-button mat-raised-button color="primary" (click)="discardAppointment(data)">{{'YES' | translate}}</button>
+  <button mat-button mat-raised-button color="accent" (click)="close()">{{'NO' | translate}}</button>
+</div>

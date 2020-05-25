@@ -25,6 +25,11 @@ export abstract class AbstractBaseCrudService<T extends BaseDto> implements Base
     return this.httpClient.get<any>(this.getPath() + "/list" + requestUrl);
   }
 
+  listSort(searchParams: string, page: number, sort: string, order: string): Observable<any> {
+    const requestUrl = searchParams + `page=${page}&sort=${sort},${order}`;
+    return this.httpClient.get<any>(this.getPath() + "/list" + requestUrl);
+  }
+
   save(dto: T): Observable<T> {
     return this.httpClient.post<T>(this.getPath() + "/save", dto);
   }

@@ -1,2 +1,30 @@
+table {
+  max-width: 98%;
+  min-width: 80%;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 30px;
+}
 
+.remove-appointment {
+  font-size: 10pt;
+  color: #e49c9c;
+  cursor: pointer
+}
 
+.confirm-dialog-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+::ng-deep snack-bar-container.snackbar {
+  background: white !important;
+  color: black;
+  margin-top: 70px !important;
+}
+
+::ng-deep snack-bar-container.snackbar button {
+  background: white !important;
+  color: #0c5687 !important;
+}

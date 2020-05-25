@@ -1,4 +1,4 @@
-import {Component, Inject, LOCALE_ID, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, LOCALE_ID, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {merge, Observable, of as observableOf} from "rxjs";
 import {Doctor, DoctorSpecialization} from "../../dto";
@@ -18,7 +18,6 @@ import {
 } from "@angular/material-moment-adapter";
 import * as moment from 'moment'
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {TicketStatus} from "../../dto/ticket-status";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute, Router} from "@angular/router";
 
@@ -72,26 +71,14 @@ export class AppointmentWithDoctorComponent implements OnInit {
   date = new FormControl(new Date());
 
   ngOnInit(): void {
-    this.updateTable()
+    this.updateTable();
     this.socketClientService.onMessage("/user/topic/timetable/updated").subscribe(timetable => {
       for (const ticket of timetable.tickets) {
-          if (ticket.id === timetable.updatedTicketId && ticket.ticketStatus === "RESERVED") {
-              this.openSnackBar("Запись успешно дабавлена!", "Мои записи")
-          }
+        if (ticket.id === timetable.updatedTicketId && ticket.ticketStatus === "RESERVED") {
+          this.openSnackBar("Запись успешно дабавлена!", "Мои записи")
+        }
       }
     })
-  }
-
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 4000,
-      horizontalPosition: "end",
-      verticalPosition: "top",
-      panelClass: ['snackbar']
-    }).onAction().subscribe(() =>
-      this.router.navigate(["appointments/my"], {relativeTo: this.route.parent})
-    );
-
   }
 
   constructor(private doctorSpecializationService: DoctorSpecializationService,
@@ -124,6 +111,18 @@ export class AppointmentWithDoctorComponent implements OnInit {
     this.minDate = new Date();
     this.maxDate = new Date();
     this.maxDate.setDate(this.maxDate.getDate() + 29);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 4000,
+      horizontalPosition: "end",
+      verticalPosition: "top",
+      panelClass: ['snackbar']
+    }).onAction().subscribe(() =>
+      this.router.navigate(["appointments/my"], {relativeTo: this.route.parent})
+    );
+
   }
 
   displayFn(specialization: DoctorSpecialization): string {
@@ -165,7 +164,7 @@ export class AppointmentWithDoctorComponent implements OnInit {
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
           this.resultsLength = data.totalElements;
-          this.pageSize = data.size;
+          this.pageSize = data.numberOfElements;
 
           return data.content;
         }),
@@ -241,10 +240,10 @@ export class AppointmentDialog implements OnInit {
 
   close(): void {
     if (this.selectedTicket) {
-        this.selectedTicket.ticketStatus = "OPENED";
-        this.socketClientService.send("/app/timetable/" + this.selectedTicket.timetableId + "/ticket/update", this.selectedTicket);
+      this.selectedTicket.ticketStatus = "OPENED";
+      this.socketClientService.send("/app/timetable/" + this.selectedTicket.timetableId + "/ticket/update", this.selectedTicket);
 
-        this.selectedTicket = null;
+      this.selectedTicket = null;
     }
     this.dialogRef.close()
   }
@@ -261,6 +260,8 @@ export class AppointmentDialog implements OnInit {
     if (ticket.ticketStatus === "DONE" || (ticket.userId != this.authService.principalValue.id && ticket.ticketStatus === "SELECTED")) {
       return "#cccdce6b"
     } else if (ticket.ticketStatus === "RESERVED") {
+      return "#cccdce6b"
+    } else if (ticket.ticketStatus === "EXPIRED") {
       return "#cccdce6b"
     } else if (ticket.ticketStatus === "SELECTED") {
       return "#14e2243d"
